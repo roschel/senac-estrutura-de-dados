@@ -12,7 +12,8 @@ public class Ex_08 {
         int n2 = leInteiroPositivo();
         int v2[] = leVetorAleatorio(n2);
 
-        intercala(v1, v2);
+        int v3[] = intercala(v1, v2);
+        exibeVetor(v3);
     }
 
     public static int[] intercala(int v1[], int v2[]) {
@@ -30,6 +31,8 @@ public class Ex_08 {
             }
 
         }
+        
+        ordenaVetor(c);
 
         return c;
     }
@@ -65,5 +68,13 @@ public class Ex_08 {
         }
 
         return v;
+    }
+    
+    public static void exibeVetor(int[] v) {
+       System.out.println();
+       for (int i=0; i<v.length;i++){
+           System.out.print(v[i] + " ");
+       }
+        System.out.println();
     }
 }
