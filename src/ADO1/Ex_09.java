@@ -42,16 +42,24 @@ public class Ex_09 {
     }
 
     public static int[] ordenaVetor(int[] v) {
-        int pos = 0;
-        int aux = 0;
-        for (int i = 1; i < v.length; i++) {
-            if (v[i]<v[pos]) {
-                aux = v[pos];
-                v[pos]=v[i];
-                v[i]=aux;
-                pos++;
+        int primeiro = v[0];
+        int i = 1;
+        int ultimo = v.length - 1;
+        while (i <= ultimo) {
+            if (v[i] <= primeiro) {
+                i++;
+            } else if (v[ultimo] > primeiro) {
+                ultimo--;
+            } else {
+                int t = v[i];
+                v[i] = v[ultimo];
+                v[ultimo] = t;
+                i++;
+                ultimo--;
             }
         }
+        v[0] = v[ultimo];
+        v[ultimo] = primeiro;
 
         return v;
     }
