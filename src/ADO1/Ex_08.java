@@ -8,32 +8,43 @@ public class Ex_08 {
 
         int n1 = leInteiroPositivo();
         int v1[] = leVetorAleatorio(n1);
+        exibeVetor(v1);
 
         int n2 = leInteiroPositivo();
         int v2[] = leVetorAleatorio(n2);
+        exibeVetor(v2);
 
         int v3[] = intercala(v1, v2);
         exibeVetor(v3);
     }
 
-    public static int[] intercala(int v1[], int v2[]) {
-        int c[] = new int[v1.length + v2.length];
-        int pos1 = 0;
-        int pos2=0;
+    public static int[] intercala(int A[], int B[]) {
+        int c[] = new int[A.length + B.length];
+        int i = 0;
+        int j = 0;
+        int k = 0;
 
-        for (int i = 0; i < c.length; i++) {
-            if (i % 2 == 0) {
-                c[i] = v1[pos1];
-                pos1++;
-            } else {
-                c[i] = v2[pos2];
-                pos2++;
+        while (k < c.length) {
+            //Sobras em B
+            if (i == A.length) {
+                c[k] = B[j];
+                j++;
+                k++;
+            } else if (j == B.length) {
+                //Sobras A
+                c[k] = A[i];
+                i++;
+                k++;
+            }else if (A[i]<=B[j]){
+                c[k]=A[i];
+                i++;
+                k++;
+            }else{
+                c[k]=B[j];
+                j++;
+                k++;
             }
-
         }
-        
-        ordenaVetor(c);
-
         return c;
     }
 
@@ -69,12 +80,12 @@ public class Ex_08 {
 
         return v;
     }
-    
+
     public static void exibeVetor(int[] v) {
-       System.out.println();
-       for (int i=0; i<v.length;i++){
-           System.out.print(v[i] + " ");
-       }
+        System.out.println();
+        for (int i = 0; i < v.length; i++) {
+            System.out.print(v[i] + " ");
+        }
         System.out.println();
     }
 }
