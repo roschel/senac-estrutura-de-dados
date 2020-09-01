@@ -46,7 +46,6 @@ public class ex_04_inverter {
        for (int i=0; i<v.length;i++){
            System.out.print(v[i] + " ");
        }
-        System.out.println();
     }
 
     private static void inverter(int[] v) {
