@@ -39,6 +39,20 @@ public class Lista {
     }
 
 
+    public String buscaElemento(String x) {
+        No temp = ini;
+        int cont=0;
+
+        while (temp != null) {
+            cont++;
+            if (cont == Integer.parseInt(x)) {
+                return temp.getElemento();
+            }
+            temp = temp.getProx();
+        }
+        return "";
+    }
+
     public int buscaPosicaoDoElemento(String x) {
         No temp = ini;
         int cont = 0;
