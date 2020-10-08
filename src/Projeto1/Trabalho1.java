@@ -19,10 +19,19 @@ import java.util.regex.Pattern;
 public class Trabalho1 {
 
     public static void main(String[] args) throws Exception {
-        String linha = null;
+        
         String nomeDoArquivo1 = "original.txt";
         String arquivoDeSaida = "compactado.txt";
+                
+        Lista lista = compactacao(nomeDoArquivo1, arquivoDeSaida);
+        descompactacao(lista, arquivoDeSaida);
+        
+    }
 
+    private static Lista compactacao(String nomeDoArquivo1, String arquivoDeSaida) throws Exception{
+        
+        String linha = null;
+        
         FileReader fileReader = new FileReader(nomeDoArquivo1);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -76,5 +85,12 @@ public class Trabalho1 {
         // feche o arquivo
         bufferedReader.close();
         bufferedWriter.close();
+        
+        return listaEncadeada;
+    }
+
+    private static void descompactacao(Lista lista, String arquivoDeSaida) {
+        
+        
     }
 }
