@@ -41,8 +41,9 @@ public class Trabalho1 {
                 if (Character.isLetter(linha.charAt(cont))) {
                     palavra += linha.charAt(cont);
                 } else {
-                    if (listaEncadeada.buscaPosicaoDoElemento(palavra) > 0) {
-                        bufferedWriter.write(Integer.toString(listaEncadeada.buscaPosicaoDoElemento(palavra)));
+                    int posicao = listaEncadeada.buscaPosicaoDoElemento(palavra);
+                    if ( posicao > 0) {
+                        bufferedWriter.write(Integer.toString(posicao) + linha.charAt(cont));
                         listaEncadeada.troca(palavra);
                     } else {
                         if (!palavra.trim().equals("")) {
