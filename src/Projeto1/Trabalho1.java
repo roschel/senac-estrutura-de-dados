@@ -115,6 +115,7 @@ public class Trabalho1 {
                     digito += linha.charAt(cont);
                     palavra = listaEncadeada.buscaElemento(digito);
                     bufferedWriter.write(palavra);
+                    listaEncadeada.troca(palavra);
                     palavra = "";
                     digito = "";
                 } else{
