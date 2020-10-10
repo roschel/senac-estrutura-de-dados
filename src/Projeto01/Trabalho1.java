@@ -22,14 +22,15 @@ public class Trabalho1 {
         
         String nomeDoArquivo1 = "original.txt";
         String arquivoDeSaida = "compactado.txt";
-        
+        String arquivoDescompactado = "descompactado.txt";
+
         Compactador compactador = new Compactador();
         
-//        Lista lista = compactador.compactar(nomeDoArquivo1, arquivoDeSaida);
+        compactador.compactar(nomeDoArquivo1, arquivoDeSaida);
         
         //System.out.println(lista.toString());
         
-        compactador.descompactar(arquivoDeSaida, arquivoDeSaida);
+        compactador.descompactar(arquivoDeSaida, arquivoDescompactado);
         
     }
 
