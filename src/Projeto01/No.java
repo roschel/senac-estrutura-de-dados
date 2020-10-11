@@ -5,8 +5,6 @@
  */
 package Projeto01;
 
-import ADO3.*;
-
 /**
  *
  * @author joaoNo ini;

@@ -5,8 +5,6 @@
  */
 package Projeto01;
 
-import java.util.ArrayList;
-
 /**
  * @author joao
  */
@@ -108,29 +106,6 @@ public class Lista {
         }
     }
 
-//    public String trocaParaInicio(String elemento) {
-//        String posicao = "1";
-//
-//        if (no != null) {
-//            if (no != ini) {
-//                posicao = String.valueOf(buscaPosicaoDoElemento(elemento));
-//
-//                No aux = no.getProx();
-//                no.setProx(no.getProx().getProx());
-//
-//                aux.setProx(ini);
-//                ini = aux;
-//
-//                return posicao;
-//            } else {
-//                return posicao;
-//            }
-//        }
-//
-//        insereInicio(elemento);
-//
-//        return elemento;
-//    }
     public No buscaLinear(String elemento) {
         No no = ini;
 
