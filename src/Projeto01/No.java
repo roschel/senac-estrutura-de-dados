@@ -6,47 +6,44 @@
 package Projeto01;
 
 /**
- *
  * @author joaoNo ini;
-
-    // Criar uma lista encadeada vazia
-    public ListaEncadeada() {
-        this.ini = null;
-    }
-    
-    public boolean vazia(){
-        return ini == null;
-    }
-
-    @Override
-    public String toString() {
-        String strLista="";
-        No temp = ini;
-        
-        while (temp != null) {            
-            strLista += temp.getElemento() + " ";
-            temp = temp.getProx();
-        }
-        return strLista;
-    }
-    
-    public void insereInicio (int elemento){
-        No novo = new No(elemento, ini);
-        ini = novo;
-    }
-    
-    public void insereFinal(int elemento){
-        No novo = new No(elemento, null);
-        No temp = ini;
-        
-        while(temp.getProx() != null){
-            temp=temp.getProx();
-        }
-        temp.setProx(novo);
-    }
+ * <p>
+ * // Criar uma lista encadeada vazia
+ * public ListaEncadeada() {
+ * this.ini = null;
+ * }
+ * <p>
+ * public boolean vazia(){
+ * return ini == null;
+ * }
+ * @Override public String toString() {
+ * String strLista="";
+ * No temp = ini;
+ * <p>
+ * while (temp != null) {
+ * strLista += temp.getElemento() + " ";
+ * temp = temp.getProx();
+ * }
+ * return strLista;
+ * }
+ * <p>
+ * public void insereInicio (int elemento){
+ * No novo = new No(elemento, ini);
+ * ini = novo;
+ * }
+ * <p>
+ * public void insereFinal(int elemento){
+ * No novo = new No(elemento, null);
+ * No temp = ini;
+ * <p>
+ * while(temp.getProx() != null){
+ * temp=temp.getProx();
+ * }
+ * temp.setProx(novo);
+ * }
  */
 public class No {
-    
+
     private String elemento;
     private No prox;
 
@@ -73,7 +70,7 @@ public class No {
 
     @Override
     public String toString() {
-        return "No{" + "elemento=" + elemento + ", prox=" + prox + '}';
+        return "No { elemento = " + elemento + ", prox = " + prox + '}';
     }
-    
+
 }

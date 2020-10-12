@@ -13,13 +13,13 @@ public class Trabalho1 {
 
     public static void main(String[] args) throws Exception {
         
-        String nomeDoArquivo1 = "original.txt";
-        String arquivoDeSaida = "compactado.txt";
+        String arquivoOriginal = "original.txt";
+        String arquivoCompactado = "compactado.txt";
         String arquivoDescompactado = "descompactado.txt";
 
         Compactador compactador = new Compactador();
         
-        compactador.compactar(nomeDoArquivo1, arquivoDeSaida);
-        compactador.descompactar(arquivoDeSaida, arquivoDescompactado);
+        compactador.compactar(arquivoOriginal, arquivoCompactado);
+        compactador.descompactar(arquivoCompactado, arquivoDescompactado);
     }
 }

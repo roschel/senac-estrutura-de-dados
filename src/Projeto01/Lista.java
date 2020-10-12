@@ -34,8 +34,7 @@ public class Lista {
     }
 
     public void insereInicio(String elemento) {
-        No novo = new No(elemento, ini);
-        ini = novo;
+        ini = new No(elemento, ini);
     }
 
     public int buscaPosicaoDoElemento(String x) {
@@ -52,20 +51,19 @@ public class Lista {
         cont = 0;
         return cont;
     }
-    
+
     public String buscaElementoPelaPosicao(int posicao) {
         No no = ini;
         int cont = 1;
-        
-        while (no != null) {            
+
+        while (no != null) {
             if (cont == posicao) {
                 return no.getElemento();
             }
-            
+
             no = no.getProx();
             cont++;
         }
-        
         return null;
     }
 
@@ -88,7 +86,6 @@ public class Lista {
                 ini = no;
             }
         }
-
         return posicao;
     }
 
@@ -101,7 +98,6 @@ public class Lista {
 
                 return;
             }
-
             aux = aux.getProx();
         }
     }
@@ -113,10 +109,8 @@ public class Lista {
             if (no.getElemento().equals(elemento)) {
                 return no;
             }
-
             no = no.getProx();
         }
-
         return null;
     }
 }
