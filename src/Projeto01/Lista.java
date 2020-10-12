@@ -70,7 +70,6 @@ public class Lista {
     /**
      * Troca a posicao de um elemento da lista para a primeira posicao se ele
      * estiver na lista.
-     *
      * @param elemento
      * @return posicao - se o elemento estiver na lista; 0 - se nao estiver.
      */

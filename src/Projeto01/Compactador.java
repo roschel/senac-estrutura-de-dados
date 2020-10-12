@@ -24,7 +24,9 @@ public class Compactador {
             ArrayList<String> linhasArquivo = new ArrayList<>();
             String linha;
 
-            while ((linha = reader.readLine()) != null) linhasArquivo.add(linha);
+            while ((linha = reader.readLine()) != null) {
+                linhasArquivo.add(linha);
+            }
 
             return linhasArquivo;
 
@@ -46,7 +48,6 @@ public class Compactador {
 
     /**
      * Compacta o arquivo.
-     *
      * @param caminho
      * @param saida
      */
@@ -77,12 +78,15 @@ public class Compactador {
                     palavra = linhaBuscada.substring(inicio, fim);
                     posicao = lista.trocaParaInicio(palavra);
 
-                    if (posicao > 0) linhaFormatada += posicao + buscador.group();
-                    else {
+                    if (posicao > 0) {
+                        linhaFormatada += posicao + buscador.group();
+                    } else {
                         linhaFormatada += palavra + buscador.group();
                         lista.insereInicio(palavra);
                     }
-                } else linhaFormatada += buscador.group();
+                } else {
+                    linhaFormatada += buscador.group();
+                }
 
                 inicio = buscador.end();
             }
@@ -93,8 +97,9 @@ public class Compactador {
                 palavra = linhaBuscada.substring(inicio, fim);
                 posicao = lista.trocaParaInicio(palavra);
 
-                if (posicao > 0) linhaFormatada += posicao;
-                else {
+                if (posicao > 0) {
+                    linhaFormatada += posicao;
+                } else {
                     linhaFormatada += palavra;
                     lista.insereInicio(palavra);
                 }
@@ -105,6 +110,11 @@ public class Compactador {
         escreverArquivo(linhasFormatadas, saida);
     }
 
+    /**
+     * Descompacta o arquivo
+     * @param caminho
+     * @param saida
+     */
     public void descompactar(String caminho, String saida) {
         Lista lista = new Lista();
         ArrayList<String> linhasArquivo = lerArquivo(caminho);
@@ -115,30 +125,33 @@ public class Compactador {
         for (String linhaArquivo : linhasArquivo) {
             Matcher buscador = pattern.matcher(linhaArquivo);
             String linhaFormatada = "";
-            String palavra = "";
+            String elemento;
 
             int inicio = 0, fim, posicao, tamanhoLinha = linhaArquivo.length();
             char caracterNaLinha;
 
             while (buscador.find()) {
+                elemento = "";
                 caracterNaLinha = linhaArquivo.charAt(inicio);
 
                 if (inicio != buscador.start()) {
                     fim = buscador.start();
+                    elemento = linhaArquivo.substring(inicio, fim);
 
                     if (isLetter(caracterNaLinha)) {
-                        palavra = linhaArquivo.substring(inicio, fim);
-                        lista.insereInicio(palavra);
+                        lista.insereInicio(elemento);
                     } else {
-                        posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
+                        posicao = Integer.parseInt(elemento);
 
                         if (posicao > 0) {
-                            palavra = lista.buscaElementoPelaPosicao(posicao);
-                            lista.trocaParaInicio(palavra);
-                        } else palavra = "0";
+                            elemento = lista.buscaElementoPelaPosicao(posicao);
+                            lista.trocaParaInicio(elemento);
+                        } else {
+                            elemento = "0";
+                        }
                     }
                 }
-                linhaFormatada += palavra + buscador.group();
+                linhaFormatada += elemento + buscador.group();
                 inicio = buscador.end();
             }
 
@@ -147,17 +160,19 @@ public class Compactador {
                 fim = tamanhoLinha;
 
                 if (isLetter(caracterNaLinha)) {
-                    palavra = linhaArquivo.substring(inicio, fim);
-                    lista.insereInicio(palavra);
+                    elemento = linhaArquivo.substring(inicio, fim);
+                    lista.insereInicio(elemento);
                 } else {
                     posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
 
                     if (posicao > 0) {
-                        palavra = lista.buscaElementoPelaPosicao(posicao);
-                        lista.trocaParaInicio(palavra);
-                    } else palavra = "0";
+                        elemento = lista.buscaElementoPelaPosicao(posicao);
+                        lista.trocaParaInicio(elemento);
+                    } else {
+                        elemento = "0";
+                    }
                 }
-                linhaFormatada += palavra;
+                linhaFormatada += elemento;
             }
             linhasFormatadas.add(linhaFormatada);
         }
@@ -169,11 +184,10 @@ public class Compactador {
     }
 
     private void validarDigitoCompactador(ArrayList<String> linhasFormatadas) {
-        if (linhasFormatadas != null && !linhasFormatadas.isEmpty())
-            if (!linhasFormatadas.get(linhasFormatadas.size() - 1).equals("0")) linhasFormatadas.add("0");
+        if (linhasFormatadas != null && !linhasFormatadas.isEmpty()) {
+            if (!linhasFormatadas.get(linhasFormatadas.size() - 1).equals("0")) {
+                linhasFormatadas.add("0");
+            }
+        }
     }
 }
-
-
-
-
