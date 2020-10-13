@@ -13,7 +13,9 @@ public class Lista {
 
     /**
      * Verifica se a lista esta vazia.
-     * @return true - se a lista estiver vazia; false - se a lista nao estiver vazia
+     *
+     * @return true - se a lista estiver vazia; false - se a lista nao estiver
+     * vazia
      */
     public boolean vazia() {
         return ini == null;
@@ -33,7 +35,8 @@ public class Lista {
 
     /**
      * Insere um novo elemento no inicio da lista.
-     * @param elemento 
+     *
+     * @param elemento
      */
     public void insereInicio(String elemento) {
         ini = new No(elemento, ini);
@@ -41,6 +44,7 @@ public class Lista {
 
     /**
      * Busca a posicao do elemento na lista.
+     *
      * @param elemento
      * @return a posicao do elemento na lista
      */
@@ -61,6 +65,7 @@ public class Lista {
 
     /**
      * Verifica se o elemento existe na lista.
+     *
      * @param posicao
      * @return proprio elemento se estiver na lista; senao, null
      */
@@ -82,6 +87,7 @@ public class Lista {
     /**
      * Troca a posicao de um elemento da lista para a primeira posicao se ele
      * estiver na lista.
+     *
      * @param elemento
      * @return posicao - se o elemento estiver na lista; 0 - se nao estiver.
      */
@@ -102,7 +108,8 @@ public class Lista {
 
     /**
      * Modifica o prox de um elemento da lista para o prox do seu prox.
-     * @param temp 
+     *
+     * @param temp
      */
     public void ordenar(No temp) {
         No aux = ini;
@@ -119,6 +126,7 @@ public class Lista {
 
     /**
      * Verifica se o elemento existe na lista.
+     *
      * @param elemento
      * @return temp - se o elemento estiver na lista; null - se nao estiver
      */
