@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Projeto01;
 
 import java.io.BufferedReader;
@@ -14,12 +9,15 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author sillas.clpinto
- */
 public class Compactador {
 
-    private ArrayList<String> lerArquivo(String caminho) {
+    /**
+     * Recupera as linhas do arquivo e adiciona a um ArrayList
+     *
+     * @param caminho
+     * @return uma lista de String com todas as linhas do arquivo
+     */
+    private static ArrayList<String> lerArquivo(String caminho) {
         try (BufferedReader reader = new BufferedReader(new FileReader(caminho))) {
             ArrayList<String> linhasArquivo = new ArrayList<>();
             String linha;
@@ -35,7 +33,13 @@ public class Compactador {
         }
     }
 
-    private void escreverArquivo(ArrayList<String> linhasArquivo, String saida) {
+    /**
+     * Escreve no arquivo cada linha de acordo com cada elemento do array.
+     *
+     * @param linhasArquivo
+     * @param saida
+     */
+    private static void escreverArquivo(ArrayList<String> linhasArquivo, String saida) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(saida))) {
             for (String linhaArquivo : linhasArquivo) {
                 bufferedWriter.write(linhaArquivo);
@@ -48,10 +52,11 @@ public class Compactador {
 
     /**
      * Compacta o arquivo.
+     *
      * @param caminho
      * @param saida
      */
-    public void compactar(String caminho, String saida) {
+    public static void compactar(String caminho, String saida) {
         Lista lista = new Lista();
         ArrayList<String> linhasDoArquivo;
         ArrayList<String> linhasFormatadas;
@@ -63,8 +68,8 @@ public class Compactador {
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
 
         //percorre as linhas que foram retiradas do arquivo e passadas para o array
-        for (int i = 0; i < linhasDoArquivo.size(); i++) {
-            String linhaBuscada = linhasDoArquivo.get(i), palavra, linhaFormatada = "";
+        for (String linhaBuscada : linhasDoArquivo) {
+            String palavra, linhaFormatada = "";
             Matcher buscador = pattern.matcher(linhaBuscada);
 
             int inicio = 0, fim, posicao, tamanhoLinha = linhaBuscada.length();
@@ -104,7 +109,7 @@ public class Compactador {
                     lista.insereInicio(palavra);
                 }
             }
-            linhasFormatadas.add(i, linhaFormatada);
+            linhasFormatadas.add(linhaFormatada);
         }
         validarDigitoCompactador(linhasFormatadas);
         escreverArquivo(linhasFormatadas, saida);
@@ -112,17 +117,19 @@ public class Compactador {
 
     /**
      * Descompacta o arquivo
+     *
      * @param caminho
      * @param saida
      */
-    public void descompactar(String caminho, String saida) {
+    public static void descompactar(String caminho, String saida) {
         Lista lista = new Lista();
         ArrayList<String> linhasArquivo = lerArquivo(caminho);
         ArrayList<String> linhasFormatadas = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
 
-        for (String linhaArquivo : linhasArquivo) {
+        for (int i = 0; i < linhasArquivo.size() - 1; i++) {
+            String linhaArquivo = linhasArquivo.get(i);
             Matcher buscador = pattern.matcher(linhaArquivo);
             String linhaFormatada = "";
             String elemento;
@@ -143,12 +150,8 @@ public class Compactador {
                     } else {
                         posicao = Integer.parseInt(elemento);
 
-                        if (posicao > 0) {
-                            elemento = lista.buscaElementoPelaPosicao(posicao);
-                            lista.trocaParaInicio(elemento);
-                        } else {
-                            elemento = "0";
-                        }
+                        elemento = lista.buscaElementoPelaPosicao(posicao);
+                        lista.trocaParaInicio(elemento);
                     }
                 }
                 linhaFormatada += elemento + buscador.group();
@@ -165,25 +168,33 @@ public class Compactador {
                 } else {
                     posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
 
-                    if (posicao > 0) {
-                        elemento = lista.buscaElementoPelaPosicao(posicao);
-                        lista.trocaParaInicio(elemento);
-                    } else {
-                        elemento = "0";
-                    }
+                    elemento = lista.buscaElementoPelaPosicao(posicao);
+                    lista.trocaParaInicio(elemento);
                 }
                 linhaFormatada += elemento;
             }
             linhasFormatadas.add(linhaFormatada);
         }
+        validarDigitoCompactador(linhasFormatadas);
         escreverArquivo(linhasFormatadas, saida);
     }
 
-    public boolean isLetter(char character) {
+    /**
+     * Verifica se um caractere eh letra.
+     *
+     * @param character
+     * @return true - se o caractere for uma letra; false - se não for
+     */
+    public static boolean isLetter(char character) {
         return Character.isLetter(character);
     }
 
-    private void validarDigitoCompactador(ArrayList<String> linhasFormatadas) {
+    /**
+     * Insere o digito que finaliza o arquivo
+     *
+     * @param linhasFormatadas
+     */
+    private static void validarDigitoCompactador(ArrayList<String> linhasFormatadas) {
         if (linhasFormatadas != null && !linhasFormatadas.isEmpty()) {
             if (!linhasFormatadas.get(linhasFormatadas.size() - 1).equals("0")) {
                 linhasFormatadas.add("0");
