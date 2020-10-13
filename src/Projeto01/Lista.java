@@ -113,11 +113,16 @@ public class Lista {
      */
     public void ordenar(No temp) {
         No aux = ini;
-
+        
         while (aux != null) {
-            if (aux.getProx() == temp && temp.getProx() != null) {
-                aux.setProx(temp.getProx());
-
+            if (aux.getProx() == temp) {
+                if (temp.getProx() != null) {
+                    
+                    aux.setProx(temp.getProx());
+                } else {
+                    aux.setProx(null);
+                }
+                
                 return;
             }
             aux = aux.getProx();
