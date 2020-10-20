@@ -30,5 +30,4 @@ public class No {
     public String toString() {
         return "No { elemento = " + elemento + ", prox = " + prox + '}';
     }
-
 }

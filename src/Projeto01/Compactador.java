@@ -58,46 +58,40 @@ public class Compactador {
      */
     public static void compactar(String caminho, String saida) {
         Lista lista = new Lista();
-        ArrayList<String> linhasDoArquivo;
-        ArrayList<String> linhasFormatadas;
 
         //recuperando todas as linhas do arquivo
-        linhasDoArquivo = lerArquivo(caminho);
-        linhasFormatadas = new ArrayList<>();
+        ArrayList<String> linhasDoArquivo = lerArquivo(caminho);
+        ArrayList<String> linhasFormatadas = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
 
         //percorre as linhas que foram retiradas do arquivo e passadas para o array
         for (String linhaBuscada : linhasDoArquivo) {
-            String palavra, linhaFormatada = "";
             Matcher buscador = pattern.matcher(linhaBuscada);
-
+            String palavra, linhaFormatada = "";
             int inicio = 0, fim, posicao, tamanhoLinha = linhaBuscada.length();
-            char caracterBuscado;
 
             while (buscador.find()) {
-                caracterBuscado = linhaBuscada.charAt(inicio);
                 fim = buscador.start();
+                String caracterEspecial = buscador.group();
 
-                if (isLetter(caracterBuscado)) {
+                if (inicio != fim) {
                     palavra = linhaBuscada.substring(inicio, fim);
                     posicao = lista.trocaParaInicio(palavra);
 
                     if (posicao > 0) {
-                        linhaFormatada += posicao + buscador.group();
+                        linhaFormatada += posicao + caracterEspecial;
                     } else {
-                        linhaFormatada += palavra + buscador.group();
+                        linhaFormatada += palavra + caracterEspecial;
                         lista.insereInicio(palavra);
                     }
                 } else {
-                    linhaFormatada += buscador.group();
+                    linhaFormatada += caracterEspecial;
                 }
-
                 inicio = buscador.end();
             }
 
             if (inicio != tamanhoLinha) {
-
                 fim = tamanhoLinha;
                 palavra = linhaBuscada.substring(inicio, fim);
                 posicao = lista.trocaParaInicio(palavra);
@@ -131,18 +125,17 @@ public class Compactador {
         for (int i = 0; i < linhasArquivo.size() - 1; i++) {
             String linhaArquivo = linhasArquivo.get(i);
             Matcher buscador = pattern.matcher(linhaArquivo);
-            String linhaFormatada = "";
-            String elemento;
-
+            String linhaFormatada = "", elemento;
             int inicio = 0, fim, posicao, tamanhoLinha = linhaArquivo.length();
             char caracterNaLinha;
 
             while (buscador.find()) {
                 elemento = "";
                 caracterNaLinha = linhaArquivo.charAt(inicio);
+                fim = buscador.start();
+                String caractereEspecial = buscador.group();
 
-                if (inicio != buscador.start()) {
-                    fim = buscador.start();
+                if (inicio != fim) {
                     elemento = linhaArquivo.substring(inicio, fim);
 
                     if (isLetter(caracterNaLinha)) {
@@ -154,19 +147,18 @@ public class Compactador {
                         lista.trocaParaInicio(elemento);
                     }
                 }
-                linhaFormatada += elemento + buscador.group();
+                linhaFormatada += elemento + caractereEspecial;
                 inicio = buscador.end();
             }
 
             if (inicio != tamanhoLinha) {
                 caracterNaLinha = linhaArquivo.charAt(inicio);
-                fim = tamanhoLinha;
+                elemento = linhaArquivo.substring(inicio, tamanhoLinha);
 
                 if (isLetter(caracterNaLinha)) {
-                    elemento = linhaArquivo.substring(inicio, fim);
                     lista.insereInicio(elemento);
                 } else {
-                    posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
+                    posicao = Integer.parseInt(elemento);
 
                     elemento = lista.buscaElementoPelaPosicao(posicao);
                     lista.trocaParaInicio(elemento);

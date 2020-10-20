@@ -12,28 +12,6 @@ public class Lista {
     }
 
     /**
-     * Verifica se a lista esta vazia.
-     *
-     * @return true - se a lista estiver vazia; false - se a lista nao estiver
-     * vazia
-     */
-    public boolean vazia() {
-        return ini == null;
-    }
-
-    @Override
-    public String toString() {
-        String strLista = "";
-        No temp = ini;
-
-        while (temp != null) {
-            strLista += temp.getElemento() + " ";
-            temp = temp.getProx();
-        }
-        return strLista;
-    }
-
-    /**
      * Insere um novo elemento no inicio da lista.
      *
      * @param elemento
@@ -113,16 +91,16 @@ public class Lista {
      */
     public void ordenar(No temp) {
         No aux = ini;
-        
+
         while (aux != null) {
             if (aux.getProx() == temp) {
                 if (temp.getProx() != null) {
-                    
+
                     aux.setProx(temp.getProx());
                 } else {
                     aux.setProx(null);
                 }
-                
+
                 return;
             }
             aux = aux.getProx();
