@@ -1,52 +1,38 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Projeto01;
 
-import java.util.ArrayList;
-
-/**
- * @author joao
- */
 public class Lista {
 
     No ini;
 
-    // Criar uma lista encadeada vazia
+    /**
+     * Cria uma lista encadeada vazia.
+     */
     public Lista() {
         this.ini = null;
     }
 
-    public boolean vazia() {
-        return ini == null;
-    }
-
-    @Override
-    public String toString() {
-        String strLista = "";
-        No temp = ini;
-
-        while (temp != null) {
-            strLista += temp.getElemento() + " ";
-            temp = temp.getProx();
-        }
-        return strLista;
-    }
-
+    /**
+     * Insere um novo elemento no inicio da lista.
+     *
+     * @param elemento
+     */
     public void insereInicio(String elemento) {
-        No novo = new No(elemento, ini);
-        ini = novo;
+        ini = new No(elemento, ini);
     }
 
-    public int buscaPosicaoDoElemento(String x) {
+    /**
+     * Busca a posicao do elemento na lista.
+     *
+     * @param elemento
+     * @return a posicao do elemento na lista
+     */
+    public int buscaPosicaoDoElemento(String elemento) {
         No temp = ini;
         int cont = 0;
 
         while (temp != null) {
             cont++;
-            if (temp.getElemento().equals(x)) {
+            if (temp.getElemento().equals(elemento)) {
                 return cont;
             }
             temp = temp.getProx();
@@ -54,20 +40,25 @@ public class Lista {
         cont = 0;
         return cont;
     }
-    
+
+    /**
+     * Verifica se o elemento existe na lista.
+     *
+     * @param posicao
+     * @return proprio elemento se estiver na lista; senao, null
+     */
     public String buscaElementoPelaPosicao(int posicao) {
-        No no = ini;
+        No temp = ini;
         int cont = 1;
-        
-        while (no != null) {            
+
+        while (temp != null) {
             if (cont == posicao) {
-                return no.getElemento();
+                return temp.getElemento();
             }
-            
-            no = no.getProx();
+
+            temp = temp.getProx();
             cont++;
         }
-        
         return null;
     }
 
@@ -79,69 +70,58 @@ public class Lista {
      * @return posicao - se o elemento estiver na lista; 0 - se nao estiver.
      */
     public int trocaParaInicio(String elemento) {
-        No no = buscaLinear(elemento);
+        No temp = buscaLinear(elemento);
         int posicao = buscaPosicaoDoElemento(elemento);
 
-        if (no != null) {
-            if (no != ini) {
-                ordenar(no);
+        if (temp != null) {
+            if (temp != ini) {
+                ordenar(temp);
 
-                no.setProx(ini);
-                ini = no;
+                temp.setProx(ini);
+                ini = temp;
             }
         }
-
         return posicao;
     }
 
-    public void ordenar(No no) {
+    /**
+     * Modifica o prox de um elemento da lista para o prox do seu prox.
+     *
+     * @param temp
+     */
+    public void ordenar(No temp) {
         No aux = ini;
 
         while (aux != null) {
-            if (aux.getProx() == no && no.getProx() != null) {
-                aux.setProx(no.getProx());
+            if (aux.getProx() == temp) {
+                if (temp.getProx() != null) {
+
+                    aux.setProx(temp.getProx());
+                } else {
+                    aux.setProx(null);
+                }
 
                 return;
             }
-
             aux = aux.getProx();
         }
     }
 
-//    public String trocaParaInicio(String elemento) {
-//        String posicao = "1";
-//
-//        if (no != null) {
-//            if (no != ini) {
-//                posicao = String.valueOf(buscaPosicaoDoElemento(elemento));
-//
-//                No aux = no.getProx();
-//                no.setProx(no.getProx().getProx());
-//
-//                aux.setProx(ini);
-//                ini = aux;
-//
-//                return posicao;
-//            } else {
-//                return posicao;
-//            }
-//        }
-//
-//        insereInicio(elemento);
-//
-//        return elemento;
-//    }
+    /**
+     * Verifica se o elemento existe na lista.
+     *
+     * @param elemento
+     * @return temp - se o elemento estiver na lista; null - se nao estiver
+     */
     public No buscaLinear(String elemento) {
-        No no = ini;
+        No temp = ini;
 
-        while (no != null) {
-            if (no.getElemento().equals(elemento)) {
-                return no;
+        while (temp != null) {
+            if (temp.getElemento().equals(elemento)) {
+                return temp;
             }
-
-            no = no.getProx();
+            temp = temp.getProx();
         }
-
         return null;
     }
 }

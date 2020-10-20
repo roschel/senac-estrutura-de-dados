@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Projeto01;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,209 +9,188 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- *
- * @author sillas.clpinto
- */
 public class Compactador {
 
-    private ArrayList<String> lerArquivo(String caminho) throws FileNotFoundException, IOException {
-        FileReader fr = new FileReader(caminho);
-        BufferedReader br = new BufferedReader(fr);
+    /**
+     * Recupera as linhas do arquivo e adiciona a um ArrayList
+     *
+     * @param caminho
+     * @return uma lista de String com todas as linhas do arquivo
+     */
+    private static ArrayList<String> lerArquivo(String caminho) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(caminho))) {
+            ArrayList<String> linhasArquivo = new ArrayList<>();
+            String linha;
 
-        ArrayList<String> linhasArquivo = new ArrayList<>();
+            while ((linha = reader.readLine()) != null) {
+                linhasArquivo.add(linha);
+            }
 
-        String linha;
+            return linhasArquivo;
 
-        while ((linha = br.readLine()) != null) {
-            linhasArquivo.add(linha);
+        } catch (IOException e) {
+            throw new Error("Erro ao ler o arquivo: " + e.getMessage());
         }
-
-        fr.close();
-        br.close();
-
-        return linhasArquivo;
     }
 
-    private void escreverArquivo(ArrayList<String> linhasArquivo, String saida) throws IOException {
-        FileWriter fw = new FileWriter(saida);
-        BufferedWriter bw = new BufferedWriter(fw);
-
-        for (String linhaArquivo : linhasArquivo) {
-            bw.write(linhaArquivo);
-            bw.newLine();
+    /**
+     * Escreve no arquivo cada linha de acordo com cada elemento do array.
+     *
+     * @param linhasArquivo
+     * @param saida
+     */
+    private static void escreverArquivo(ArrayList<String> linhasArquivo, String saida) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(saida))) {
+            for (String linhaArquivo : linhasArquivo) {
+                bufferedWriter.write(linhaArquivo);
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            throw new Error("Erro ao ler o arquivo: " + e.getMessage());
         }
-
-        bw.close();
     }
 
-//    public Lista compactar(String caminho, String saida) throws Exception {
-//        Lista listaEncadeada = new Lista();
-//        
-//        ArrayList<String> linhasArquivo = lerArquivo(caminho);
-//        
-//        ArrayList<String> linhasFormatadas = listaEncadeada.inserePalavrasNaLista(linhasArquivo);
-//
-//        escreverArquivo(linhasFormatadas, saida);
-//
-//        return listaEncadeada;
-//    }
     /**
      * Compacta o arquivo.
      *
      * @param caminho
      * @param saida
-     * @return lista com todas as palavras encontradas no arquivo.
-     * @throws Exception
      */
-    public void compactar(String caminho, String saida) throws Exception {
+    public static void compactar(String caminho, String saida) {
         Lista lista = new Lista();
 
         //recuperando todas as linhas do arquivo
-        ArrayList<String> linhasArquivo = lerArquivo(caminho);
+        ArrayList<String> linhasDoArquivo = lerArquivo(caminho);
         ArrayList<String> linhasFormatadas = new ArrayList<>();
 
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+
         //percorre as linhas que foram retiradas do arquivo e passadas para o array
-        for (int i = 0; i < linhasArquivo.size(); i++) {
-            //linha do arquivo do indice atual
-            String linhaArquivo = linhasArquivo.get(i);
-            int inicio = 0;
-            int fim;
+        for (String linhaBuscada : linhasDoArquivo) {
+            Matcher buscador = pattern.matcher(linhaBuscada);
+            String palavra, linhaFormatada = "";
+            int inicio = 0, fim, posicao, tamanhoLinha = linhaBuscada.length();
 
-            String linhaFormatada = "";
-            linhasFormatadas.add(linhaFormatada);
+            while (buscador.find()) {
+                fim = buscador.start();
+                String caracterEspecial = buscador.group();
 
-            //percorrendo caractere a caractere da linha atual
-            for (int j = 0; j < linhaArquivo.length(); j++) {
-                char caractere = linhaArquivo.charAt(j);
-
-                //se o caractere da posicao j nao for uma letra
-                if (!Character.isLetter(caractere)) {
-                    //se a posicao inicio for diferente de j entao eu tenho uma palavra formada
-                    if (inicio != j) {
-                        fim = j;
-
-                        //recuperando a palavra
-                        String palavra = linhaArquivo.substring(inicio, fim);
-                        //trocando a posicao da palavra para a posicao inicial,
-                        //se ela estiver na lista e recuperando a sua posicao
-                        int posicao = lista.trocaParaInicio(palavra);
-
-                        //se a palavra estiver na lista, a sua posicao sera copiada para o arquivo
-                        if (posicao > 0) {
-                            linhaFormatada += posicao + String.valueOf(caractere);
-                        } else { //senao, a palavra sera copiada para o arquivo
-                            lista.insereInicio(palavra);
-                            linhaFormatada += palavra + String.valueOf(caractere);
-                        }
-
-                        linhasFormatadas.set(i, linhaFormatada);
-
-                        //inicio passa a obter a posicao atual de j para a formacao da proxima palavra
-                        inicio = j + 1;
-                    } else {//se o caractere da posicao j nao for uma letra
-                        linhaFormatada += String.valueOf(caractere);
-                        inicio = j + 1;
-
-                        //se a posicao j for a ultima do laco, sera adicionado os caracteres no arquivo
-                        if (linhaArquivo.length() - 1 == j) {
-                            linhasFormatadas.set(i, linhaFormatada);
-                        }
-                    }
-                } else if (linhaArquivo.length() - 1 == j) { //se for caractere e se a posicao j for a ultima do laco
-                    fim = j + 1;
-
-                    String palavra = linhaArquivo.substring(inicio, fim);
-
-                    int posicao = lista.trocaParaInicio(palavra);
+                if (inicio != fim) {
+                    palavra = linhaBuscada.substring(inicio, fim);
+                    posicao = lista.trocaParaInicio(palavra);
 
                     if (posicao > 0) {
-                        linhaFormatada += posicao;
+                        linhaFormatada += posicao + caracterEspecial;
                     } else {
+                        linhaFormatada += palavra + caracterEspecial;
                         lista.insereInicio(palavra);
-                        linhaFormatada += palavra;
                     }
+                } else {
+                    linhaFormatada += caracterEspecial;
+                }
+                inicio = buscador.end();
+            }
 
-                    linhasFormatadas.set(i, linhaFormatada);
+            if (inicio != tamanhoLinha) {
+                fim = tamanhoLinha;
+                palavra = linhaBuscada.substring(inicio, fim);
+                posicao = lista.trocaParaInicio(palavra);
+
+                if (posicao > 0) {
+                    linhaFormatada += posicao;
+                } else {
+                    linhaFormatada += palavra;
+                    lista.insereInicio(palavra);
                 }
             }
+            linhasFormatadas.add(linhaFormatada);
         }
-
+        validarDigitoCompactador(linhasFormatadas);
         escreverArquivo(linhasFormatadas, saida);
     }
 
-    public void descompactar(String caminho, String saida) throws IOException {
+    /**
+     * Descompacta o arquivo
+     *
+     * @param caminho
+     * @param saida
+     */
+    public static void descompactar(String caminho, String saida) {
         Lista lista = new Lista();
-
         ArrayList<String> linhasArquivo = lerArquivo(caminho);
         ArrayList<String> linhasFormatadas = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
 
-        for (int i = 0; i < linhasArquivo.size(); i++) {
-            String linhaArquivo = linhasArquivo.get(i); //oi, 
+        for (int i = 0; i < linhasArquivo.size() - 1; i++) {
+            String linhaArquivo = linhasArquivo.get(i);
+            Matcher buscador = pattern.matcher(linhaArquivo);
+            String linhaFormatada = "", elemento;
+            int inicio = 0, fim, posicao, tamanhoLinha = linhaArquivo.length();
+            char caracterNaLinha;
 
-            linhasFormatadas.add("");
+            while (buscador.find()) {
+                elemento = "";
+                caracterNaLinha = linhaArquivo.charAt(inicio);
+                fim = buscador.start();
+                String caractereEspecial = buscador.group();
 
-            Matcher matcher = pattern.matcher(linhaArquivo);
-            int inicio = 0;
-            int fim;
+                if (inicio != fim) {
+                    elemento = linhaArquivo.substring(inicio, fim);
 
-            String linhaFormatada = "";
-            while (matcher.find()) {
-                String palavra = "";
-
-                if (inicio != matcher.start()) {
-                    boolean ehLetra = Character.isLetter(linhaArquivo.charAt(inicio));
-                    fim = matcher.start();
-
-                    if (ehLetra) {
-                        palavra = linhaArquivo.substring(inicio, fim);
-                        lista.insereInicio(palavra);
+                    if (isLetter(caracterNaLinha)) {
+                        lista.insereInicio(elemento);
                     } else {
-                        int posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
+                        posicao = Integer.parseInt(elemento);
 
-                        if (posicao > 0) {
-                            palavra = lista.buscaElementoPelaPosicao(posicao);
-
-                            lista.trocaParaInicio(palavra);
-                        } else {
-                            palavra = "0";
-                        }
+                        elemento = lista.buscaElementoPelaPosicao(posicao);
+                        lista.trocaParaInicio(elemento);
                     }
                 }
-
-                linhaFormatada += palavra + matcher.group();
-
-                inicio = matcher.end();
+                linhaFormatada += elemento + caractereEspecial;
+                inicio = buscador.end();
             }
 
-            if (inicio != linhaArquivo.length()) {
-                boolean ehLetra = Character.isLetter(linhaArquivo.charAt(inicio));
-                fim = linhaArquivo.length();
+            if (inicio != tamanhoLinha) {
+                caracterNaLinha = linhaArquivo.charAt(inicio);
+                elemento = linhaArquivo.substring(inicio, tamanhoLinha);
 
-                String palavra;
-                if (ehLetra) {
-                    palavra = linhaArquivo.substring(inicio, fim);
-                    lista.insereInicio(palavra);
+                if (isLetter(caracterNaLinha)) {
+                    lista.insereInicio(elemento);
                 } else {
-                    int posicao = Integer.parseInt(linhaArquivo.substring(inicio, fim));
+                    posicao = Integer.parseInt(elemento);
 
-                    if (posicao > 0) {
-                        palavra = lista.buscaElementoPelaPosicao(posicao);
-
-                        lista.trocaParaInicio(palavra);
-                    } else {
-                        palavra = "0";
-                    }
+                    elemento = lista.buscaElementoPelaPosicao(posicao);
+                    lista.trocaParaInicio(elemento);
                 }
-
-                linhaFormatada += palavra;
+                linhaFormatada += elemento;
             }
-
-            linhasFormatadas.set(i, linhaFormatada);
+            linhasFormatadas.add(linhaFormatada);
         }
-
+        validarDigitoCompactador(linhasFormatadas);
         escreverArquivo(linhasFormatadas, saida);
+    }
+
+    /**
+     * Verifica se um caractere eh letra.
+     *
+     * @param character
+     * @return true - se o caractere for uma letra; false - se não for
+     */
+    public static boolean isLetter(char character) {
+        return Character.isLetter(character);
+    }
+
+    /**
+     * Insere o digito que finaliza o arquivo
+     *
+     * @param linhasFormatadas
+     */
+    private static void validarDigitoCompactador(ArrayList<String> linhasFormatadas) {
+        if (linhasFormatadas != null && !linhasFormatadas.isEmpty()) {
+            if (!linhasFormatadas.get(linhasFormatadas.size() - 1).equals("0")) {
+                linhasFormatadas.add("0");
+            }
+        }
     }
 }
