@@ -63,7 +63,7 @@ public class Compactador {
         ArrayList<String> linhasDoArquivo = lerArquivo(caminho);
         ArrayList<String> linhasFormatadas = new ArrayList<>();
 
-        Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]");
 
         //percorre as linhas que foram retiradas do arquivo e passadas para o array
         for (String linhaBuscada : linhasDoArquivo) {
@@ -120,7 +120,7 @@ public class Compactador {
         ArrayList<String> linhasArquivo = lerArquivo(caminho);
         ArrayList<String> linhasFormatadas = new ArrayList<>();
 
-        Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]");
 
         for (int i = 0; i < linhasArquivo.size() - 1; i++) {
             String linhaArquivo = linhasArquivo.get(i);
