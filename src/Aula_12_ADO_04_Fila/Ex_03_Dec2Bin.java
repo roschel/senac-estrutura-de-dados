@@ -5,7 +5,7 @@
  */
 package Aula_12_ADO_04_Fila;
 
-import static Aula_01_Vetores.Ex_04_Inverter.leInteiroPositivo;
+import static Aula_01_Vetores.ex_04_inverter.leInteiroPositivo;
 import Aula_10_Pilha.Pilha;
 
 
