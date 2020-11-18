@@ -21,12 +21,13 @@ public class testaABB {
 
         while ((linha = reader.readLine()) != null) {
             palavras = linha.split(" ");
-
         }
 
         for (String palavra : palavras) {
             tree.insere(palavra);
         }
+        
+        tree.inOrdem();
 
 //        String a = "todos";
 //        String b= "os";
