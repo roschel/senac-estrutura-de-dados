@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class testaABB {
 
@@ -17,10 +19,13 @@ public class testaABB {
 
         BufferedReader reader = new BufferedReader(new FileReader("texto.txt"));
         String linha;
-        String[] palavras = null;
+        List<String> palavras = new ArrayList<>();
 
         while ((linha = reader.readLine()) != null) {
-            palavras = linha.split(" ");
+            String[] x = linha.split(" ");
+            for (int i = 0; i < x.length; i++) {
+                palavras.add(x[i]);
+            }
         }
 
         for (String palavra : palavras) {
@@ -28,42 +33,5 @@ public class testaABB {
         }
         
         tree.inOrdem();
-
-//        String a = "todos";
-//        String b= "os";
-//        System.out.println(b.compareTo(a));
-
-
-//        tree.insere("teste");
-//        tree.insere("uva");
-//        tree.insere("abacaxi");
-//        tree.insere("maca");
-//        tree.insere("bana");
-//        tree.insere("gilo");
-//        if (tree.buscaIt("gilo") == 0) {
-//            tree.insere("gilo");
-//        }else{
-//            System.out.println(tree.buscaIt("gilo"));
-//        }
-//        System.out.print("\nPré-Ordem: ");
-//        tree.preOrdem();
-//        System.out.print("\nIn-Ordem: ");
-//        tree.inOrdem();
-//        System.out.print("\nPós-Ordem: ");
-//        tree.posOrdem();
-//        int num = 8;
-//        if(tree.buscaIt(num) != null)
-//            System.out.println("Achou " + tree.buscaIt(num).getElemento());
-//        else
-//            System.out.println("NAO Achou " + num);
-//        
-//        num = 10;
-//        if(tree.buscaR(num) != null)
-//            System.out.println("Achou " + tree.buscaIt(num).getElemento());
-//        else
-//            System.out.println("NAO Achou " + num);
-//        
-//        System.out.println("O maior elemento = " + tree.maiorIt().getElemento());
-//        System.out.println("O menor elemento = " + tree.menor().getElemento());
     }
 }
