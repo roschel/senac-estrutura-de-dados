@@ -15,9 +15,9 @@ import java.util.Scanner;
 public class Ex_04_Inverter_Palavras {
     public static void main(String[] args) throws Exception {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Digite um texto (final com .): ");
+        System.out.println("Digite um texto.txt (final com .): ");
         String texto = entrada.nextLine();
-        System.out.println("O texto com as palavras invertidas é: ");
+        System.out.println("O texto.txt com as palavras invertidas é: ");
         System.out.println(inv_Palavra(texto));
     }
 
