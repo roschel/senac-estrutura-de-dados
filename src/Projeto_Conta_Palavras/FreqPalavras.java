@@ -13,14 +13,14 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ABB {
+public class FreqPalavras {
 
     private No raiz;
 
     List<String> listaFrequenciaPalavras;
 
     // Cria uma árvore vazia
-    public ABB() {
+    public FreqPalavras() {
         this.raiz = null;
 
         if (listaFrequenciaPalavras == null) {

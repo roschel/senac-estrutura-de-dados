@@ -5,10 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class testaABB {
+public class testaFreqPalavras {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        ABB arvore = new ABB();
+        FreqPalavras arvore = new FreqPalavras();
 
         BufferedReader leitor = new BufferedReader(new FileReader("texto.txt"));
         String linha;
@@ -18,7 +18,7 @@ public class testaABB {
             String[] arrayPalavras = linha.split(" ");
 
             for (String item : arrayPalavras) {
-                String palavra = item.replaceAll(regexNumerosCaracteres, "").toLowerCase();
+                String palavra = item.replaceAll(regexNumerosCaracteres, "");
 
                 if (!palavra.isEmpty())
                     arvore.insere(palavra);
